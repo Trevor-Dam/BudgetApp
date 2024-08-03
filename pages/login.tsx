@@ -9,7 +9,7 @@ import {
   Text,
   useColorScheme,
   View,
-  Button,
+  Pressable,
   TextInput,
 } from 'react-native';
 
@@ -66,10 +66,9 @@ export default function Login() {
             placeholder="Password"
             onChangeText={newText => setPassword(newText)}
           />
-          <Button
-            title="Login"
+          <Pressable
             onPress={() => {validateLogin(text, password)}}
-          />
+          >Login</Pressable>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -79,7 +78,9 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   title: {
     fontSize: 20,
