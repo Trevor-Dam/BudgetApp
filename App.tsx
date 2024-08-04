@@ -10,12 +10,13 @@
  */
 
 import React, {createContext} from 'react';
-///import {NavigationContainer} from 'react-navigation'
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 
 import Login from './pages/login';
-import HomePage from 'pages/Home';
+import HomePage from './pages/Home';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 export const AuthContext = createContext<{
   userKey: number,
@@ -49,10 +50,12 @@ function App(): React.JSX.Element {
   });
   return (
     <AuthContext.Provider value={isAuth}>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-        <Stack.Screen component={HomePage} name="Home" />
-        <Stack.Screen component={Login} name="login" />
-      </Stack.Navigator>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="login" screenOptions={{headerShown: false}}>
+          <Stack.Screen component={HomePage} name="Home" />
+          <Stack.Screen component={Login} name="login" />
+        </Stack.Navigator>
+      </NavigationContainer>
     </AuthContext.Provider>
   );
 }

@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import React from 'react';
 ///import type {PropsWithChildren} from 'react';
 import { useState } from 'react';
@@ -13,13 +15,18 @@ import {
   TextInput,
 } from 'react-native';
 
+import { AuthContext } from 'App';
+
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-///var flag = false;
-var code = 0;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+var useLogin = () => {
+  const isAuth = React.useContext(AuthContext);
 
-function validateLogin(username: string, password: string): boolean {
+  return isAuth;
+};
 
+function validateLogin(username: string, password: string) {
     fetch('/api/login', {
       method: 'POST',
       headers: {
@@ -29,15 +36,15 @@ function validateLogin(username: string, password: string): boolean {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        code = data.code;
+        useLogin = ()=> ({
+          userKey: data.id,
+          name: data.Name,
+          surname: data.Surname,
+          income: data.Income,
+          availableFunds: data.Budget,
+        });
       })
       .catch(error => console.log(error));
-  if (code === 200) {
-    return true;
-  } else {
-    return false;
-  }
 }
 
 export default function Login() {
@@ -80,7 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
     fontSize: 20,
